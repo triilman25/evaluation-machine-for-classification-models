@@ -4,8 +4,13 @@ project(model_eval VERSION 1.0.0)
 set(CMAKE_CXX_STANDARD 20)
 set(FOR_WIN32 ON) #ubah ketika butuh untuk dijadikan aplikasi windows
 
+if(WIN32)
+    set(RESOURCE_FILE resources/memapp.rc)
+    enable_language(RC)
+endif()
+
 if (FOR_WIN32)
-    add_executable(model_eval WIN32 main.cpp)
+    add_executable(model_eval WIN32 main.cpp ${RESOURCE_FILE})
 else ()
     add_executable(model_eval main.cpp)
 endif ()
@@ -48,4 +53,8 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 add_subdirectory(lib)
 
-target_link_libraries(${PROJECT_NAME} raylib element ${OpenCV_LIBS} libtransform ${TORCH_LIBRARIES}) #-mwindows
+target_link_libraries(${PROJECT_NAME} raylib element ${OpenCV_LIBS} libtransform ${TORCH_LIBRARIES})
+
+if(WIN32)
+    set_source_files_properties(${RESOURCE_FILE} PROPERTIES LANGUAGE RC)
+endif()
