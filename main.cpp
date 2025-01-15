@@ -149,7 +149,7 @@ int main(int argc, char *argv[]) {
         }
         //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-        spinner_mode->applyMode().setStaticPath();
+        spinner_mode->applyMode().setStaticPath(4);
         classify_button->applyMode();
         eval_table->applyMode();
         int i = 0;
@@ -157,7 +157,7 @@ int main(int argc, char *argv[]) {
             text->applyMode().droppedMode();
 
             if (text->isClicked) {
-                text->setStaticPath();
+                text->setStaticPath(i+1); // it's +1 because the id start from 1 not 0
                 if (i==1) image_area->applyMode();
             }
             ++i;
