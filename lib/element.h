@@ -108,7 +108,7 @@ namespace elm {
         Component& setColShape();
         Component& applyMode();
         Component& droppedMode();
-        Component& setStaticPath();
+        Component& setStaticPath(int id=1);
         void setEvalValue(const bool &theme, std::vector<std::array<float, 2>> in_value);
         [[nodiscard]] std::string getCorectPath() const;
         [[nodiscard]] static PathHandler getGlobalPath();

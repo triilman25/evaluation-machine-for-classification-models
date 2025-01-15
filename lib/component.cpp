@@ -213,21 +213,33 @@ namespace elm {
         return *this;
     }
 
-    Component & Component::setStaticPath() {
-        // std::cout << "set static component" << std::endl;
-        if (IsFileExtension(textbox.final_path.c_str(), ".jpg") || IsFileExtension(textbox.final_path.c_str(), ".jpeg")) {
-            elm::Component::GLOB_PATH_ = textbox.final_path;
-            global_path.image = std::move(textbox.final_path);
+    Component & Component::setStaticPath(int id) {
+        switch (id) {
+            case 1: {
+                if (IsFileExtension(textbox.final_path.c_str(), ".pt") || IsFileExtension(textbox.final_path.c_str(), ".pth")) {
+                    global_path.module = std::move(textbox.final_path);
+                }else std::cout << "The file is no matched with models"<< std::endl;
+            }break;
+            case 2: {
+                if (IsFileExtension(textbox.final_path.c_str(), ".jpg") || IsFileExtension(textbox.final_path.c_str(), ".jpeg")) {
+                    GLOB_PATH_ = textbox.final_path;
+                    global_path.image = std::move(textbox.final_path);
+                }else std::cout << "The file is no matched with image"<< std::endl;
+            }break;
+            case 3: {
+                if (IsFileExtension(textbox.final_path.c_str(), ".csv") || IsFileExtension(textbox.final_path.c_str(), ".txt")) {
+                    global_path.label = std::move(textbox.final_path);
+                }else std::cout << "The file is no matched with csv"<< std::endl;
+            }break;
+            case 4: {
+                if (spin_handler.spinnerValue) {
+                    global_path.spinner_v = spin_handler.spinnerValue;
+                }else std::cout << "is not expected"<< std::endl;
+            }break;
+            default:;
         }
-        if (IsFileExtension(textbox.final_path.c_str(), ".pt") || IsFileExtension(textbox.final_path.c_str(), ".pth")) {
-            global_path.module = std::move(textbox.final_path);
-        }
-        if (IsFileExtension(textbox.final_path.c_str(), ".csv") || IsFileExtension(textbox.final_path.c_str(), ".txt")) {
-            global_path.label = std::move(textbox.final_path);
-        }
-        if (spin_handler.spinnerValue) {
-            global_path.spinner_v = spin_handler.spinnerValue;
-        }
+
+
         return *this;
     }
 
