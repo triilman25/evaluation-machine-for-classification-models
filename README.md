@@ -32,8 +32,8 @@ cmake --Build . -DCMAKE_BUILD_TYPE=Release
 
 This application, especially version 1.0.5 is not properly built with rich features. 
 The application doesn't include manual instructions in it. You can use the *shortcut* bellow:
-- `ctrl_left + click` - erasing all input character in *textbox*.
-- `shift + 1/2` - switching between light and dark mode.
+- `ctrl_left + [left click]` - erasing all input character in *textbox*.
+- `shift + [1/2]` - switching between light and dark mode.
 - `scroll` - using scroll for increase and decrease input size instead just using arrows.
 
 > **NOTE :**
