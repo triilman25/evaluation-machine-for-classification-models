@@ -1,10 +1,8 @@
 #include "raylib.h"
 #include "lib/rayoutgen.hpp"
-// #define RAYGUI_IMPLEMENTATION
 #include "lib/raygui.h"
 #include "lib/element.h"
 #include <iostream>
-// #include <utility>
 #include "lib/libtransform.h"
 #include "torch/torch.h"
 #include <torch/script.h>
@@ -40,7 +38,7 @@ Color hex_to_rgb(const std::string &color="979dac") {
 }
 
 
-#define WIN32 1
+#define WIN32 1 // Compilation platform
 #define panel_2 1
 #if WIN32
 int WinMain() {
@@ -174,20 +172,19 @@ int main(int argc, char *argv[]) {
                 try{
                     lib_transform(get_all_path).toCvImage().resizeImage();
                     lib_transform.reverseImageForm().toRangeTensor();
-                    lib_transform.normalization().toInputValue();
+                    lib_transform.normalization().toInputValue(); //get tensor input type
 
-                    lib_transform.loadModel();
+                    lib_transform.loadModel(); // load model
                     if (lib_transform.loadModel() != 0) {
                         std::cerr << "Model loading failed, skipping inference.\n";
                         return -1;
                     }
-                    lib_transform.forward();
+                    lib_transform.forward(); // forward propagation
                 }catch (const std::exception &e) {
                     std::cerr << "Error during pipeline: " << e.what() << std::endl;
                 }
-                // is_loaded = false;
 
-                std::vector<std::array<float, 2>> outputs = lib_transform.getStdOutput();
+                std::vector<std::array<float, 2>> outputs = lib_transform.getStdOutput(); // Get Output after forward
                 eval_table->setEvalValue(is_theme_change,outputs); // get evaluation value
 
             }
@@ -217,7 +214,7 @@ int main(int argc, char *argv[]) {
                 is_error = false;
             }
         }
-        // Gui
+
         EndDrawing();
     }
 
