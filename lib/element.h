@@ -90,6 +90,7 @@ namespace elm {
         FilePathList drop_file{0,0, nullptr};
         static int CLICK_COUNT;
         std::string icon;
+        mutable double duration_time{0};
 
         //Table Section
         std::vector<std::string> classes{};
@@ -109,7 +110,7 @@ namespace elm {
         Component& applyMode();
         Component& droppedMode();
         Component& setStaticPath(int id=1);
-        void setEvalValue(const bool &theme, std::vector<std::array<float, 2>> in_value);
+        void setEvalValue(const bool &theme, std::vector<std::array<float, 2>> in_value, const double &duration);
         [[nodiscard]] std::string getCorectPath() const;
         [[nodiscard]] static PathHandler getGlobalPath();
         [[nodiscard]] std::vector<int> getBBox() const;

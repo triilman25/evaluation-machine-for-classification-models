@@ -258,8 +258,9 @@ namespace elm {
         return {bbox_component.pan_width, bbox_component.pan_height};
     }
 
-    void Component::setEvalValue(const bool &theme, std::vector<std::array<float, 2>> in_value) { //just for table
+    void Component::setEvalValue(const bool &theme, std::vector<std::array<float, 2>> in_value, const double &duration) { //just for table
         this->isClicked = theme;
+        this->duration_time = duration;
         this->eval_value = std::move(in_value);
         std::cout << this->eval_value.size() << std::endl;
     }
@@ -378,9 +379,14 @@ namespace elm {
                             GuiDrawText(TextFormat("%03.4f", eval_value[row][1]), // Tampilkan nilai kedua di kolom 2
                                             {static_cast<float>(top_x), static_cast<float>(top_y), eval_table.element_width, eval_table.element_height}, TEXT_ALIGN_CENTER, text_color);
                         }
-                        //footer
+
+                        //FOOTER
                         if (row == static_cast<int>(eval_table.rows) - 1 && col >= static_cast<int>(eval_table.cols) - this->header.size()) {
-                            GuiDrawRectangle({static_cast<float>(top_x), static_cast<float>(top_y)+32, eval_table.element_width, eval_table.element_height}, 2, transparant, MAROON);
+                            GuiDrawRectangle({static_cast<float>(top_x), static_cast<float>(top_y)+38, eval_table.element_width, eval_table.element_height}, 2, transparant, MAROON);
+                            if (col == static_cast<int>(eval_table.cols) - 1) {
+                                GuiDrawText(TextFormat("Inference time: %03.4f second", this->duration_time), // Tampilkan nilai kedua di kolom 2
+                                               {static_cast<float>(top_x)-(eval_table.element_width*2), static_cast<float>(top_y)+38, eval_table.element_width*2, eval_table.element_height}, TEXT_ALIGN_LEFT, WHITE);
+                            }
                         }
                     }
                 }
