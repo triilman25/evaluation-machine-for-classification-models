@@ -6,6 +6,7 @@
 #include "lib/libtransform.h"
 #include "torch/torch.h"
 #include <torch/script.h>
+#include <chrono>
 
 struct PathTemp {
     std::string theme;
@@ -162,13 +163,18 @@ int main(int argc, char *argv[]) {
         }
 
         if (classify_button->isClicked) {
+
+            //duration declaration
+            std::chrono::duration<double> duration{0};
             get_all_path = elm::Component::getGlobalPath();
             if (!(IsFileExtension(get_all_path.image.c_str(), ".jpeg")||
                 IsFileExtension(get_all_path.image.c_str(), ".jpg")) ||
                 !(IsFileExtension(get_all_path.module.c_str(), ".pt") ||
-                IsFileExtension(get_all_path.module.c_str(), ".pth"))) {
+                IsFileExtension(get_all_path.module.c_str(), ".pth")))
+            {
                 is_error = true;
-            } else {
+            }
+            else {
                 try{
                     lib_transform(get_all_path).toCvImage().resizeImage();
                     lib_transform.reverseImageForm().toRangeTensor();
@@ -179,13 +185,22 @@ int main(int argc, char *argv[]) {
                         std::cerr << "Model loading failed, skipping inference.\n";
                         return -1;
                     }
-                    lib_transform.forward(); // forward propagation
+                     // start timer
+                    auto start = std::chrono::high_resolution_clock::now();
+
+                    // forward propagation
+                    lib_transform.forward();
+
+                    // Hentikan timer
+                    auto end = std::chrono::high_resolution_clock::now();
+                    duration = end - start;
+
                 }catch (const std::exception &e) {
                     std::cerr << "Error during pipeline: " << e.what() << std::endl;
                 }
-
+                std::cout << "Inference time: " << duration.count() << std::endl;
                 std::vector<std::array<float, 2>> outputs = lib_transform.getStdOutput(); // Get Output after forward
-                eval_table->setEvalValue(is_theme_change,outputs); // get evaluation value
+                eval_table->setEvalValue(is_theme_change,outputs, duration.count()); // get evaluation value
 
             }
         }
