@@ -17,6 +17,7 @@ first of all, replace or change dependency's path of [LibTorch][pytorch] and ope
     set(OpenCV_DIR "C:/opencv/build/x64/vc16/lib") #OpenCV
 ```
 second, create `build` directory (more simple by using IDE like clion for the rest tutorial) on the same hierarchy with the `main` file or Cmake list file.
+
 the last, got to the build directory, configure and build application by using command bellow:
 
 ```bash
