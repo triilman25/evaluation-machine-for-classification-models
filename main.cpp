@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
     spinner_mode->initAsSpinner();
 
 #if panel_2
-    std::vector<std::string> header = {"Classes", "Prediction", "Probabilities"};
+    std::vector<std::string> header = {"Classes", "Predictions", "Probabilities"};
     rtg::Panel4Panel<elm::Component> panel2(0,350,800, 900);
     panel2.marginAll(10);
 
